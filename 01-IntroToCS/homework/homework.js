@@ -34,11 +34,14 @@ function DecimalABinario(num) {
     num = Math.floor(num / 2)
   }
 
-  return binary.join("");
+  return binary.join(""); 
 
 }
+
+
 
 module.exports = {
   BinarioADecimal,
   DecimalABinario,
 }
+
