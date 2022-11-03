@@ -25,12 +25,12 @@ function DecimalABinario(num) {
   // tu codigo aca
   //recive un Num y debe retornar un String
 
-  if(num <= 0) return 0;
+  if(num <= 0) return '0';
 
   let binary = [];
 
   while(num >=1){
-    binary.unshift(num % 2);
+    binary.unshift(num % 2); // 1 % 2 = 1
     num = Math.floor(num / 2)
   }
 
