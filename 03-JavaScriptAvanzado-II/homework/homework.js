@@ -22,12 +22,12 @@ function counter() {
   otroContador()      // 3
    */
 
-  var contador = 0;
+  var contador = 1;
 
   return function (){
 
-    contador++
-    return contador
+    //contador++
+    return contador++
   } 
   
 
