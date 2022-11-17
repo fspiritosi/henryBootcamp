@@ -11,9 +11,68 @@ Implementar la clase LinkedList, definiendo los siguientes métodos:
   En caso de que la búsqueda no arroje resultados, search debe retornar null.
 */
 
-function LinkedList() {}
+function LinkedList() {
+  this.head = null
+}
 
-function Node(value) {}
+function Node(value) {
+  this.value = value,
+  this.next = null
+}
+
+LinkedList.prototype.add = function(value){
+  if(this.head === null) this.head = new Node(value)
+  else{
+    let ref = this.head;
+    while(ref.next !== null){
+      ref = ref.next
+    }
+    ref.next = new Node(value)
+  }
+}
+
+LinkedList.prototype.remove = function(value){
+  //lista vacia
+  if(this.head === null) return null; 
+
+  //lista de un solo nodo
+  if(this.head.next === null){
+    let valueNodo = this.head.value
+    this.head = null
+    return valueNodo
+  }
+
+  //lista larga
+  
+  else{
+    let ref = this.head;
+    while(ref.next.next !== null){
+      ref = ref.next
+    }
+    let valueNodo = ref.next.value
+    ref.next = null
+    return valueNodo
+  }
+}
+
+LinkedList.prototype.search = function(param){
+  if(this.head === null) return null;
+  let ref = this.head
+  while(ref !== null){
+    if(typeof param === "function"){
+      if(param(ref.value) === true){
+        return ref.value
+      }
+    }
+    if(ref.value === param) return ref.value;
+    else{
+      ref = ref.next;
+    }
+  }
+  return null
+  
+}
+
 
 /*
 Implementar la clase HashTable.
@@ -30,7 +89,46 @@ La clase debe tener los siguientes métodos:
 Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
 */
 
-function HashTable() {}
+function HashTable() {
+  this.numBuckets = 35;
+  this.buckets = [];
+}
+
+HashTable.prototype.hash = function(key){
+  let total = 0;
+  for (let i = 0; i < key.lkey; i++) {
+    total = total + key.chartCodeAt(i)
+  }
+  let resultado = total % 35;
+  return resultado
+}
+
+HashTable.prototype.set = function(key, value){
+
+  if(typeof key !== "string") throw new TypeError('Keys must be strings');
+  
+  let index = this.hash(key)
+
+  if(this.buckets[index] === null){
+    this.buckets[index] = {};
+  }
+  this.buckets[index][key] = value;
+
+}
+
+HashTable.prototype.get = function(key){
+  let index = this.hash(key);
+  return this.buckets[index][key];
+}
+
+HashTable.prototype.hasKey = function(key){
+  let index = this.hash(key)
+  return this.buckets[index].hasOwnProperty(key)
+}
+
+
+
+
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
