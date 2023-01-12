@@ -1,3 +1,4 @@
+const { merge } = require('@11ty/eleventy/src/TemplateData.js');
 const {
     Queue,
     Node,
@@ -16,7 +17,18 @@ const {
 
 var countArray = function(array) {
     // Tu código aca:
-    
+    let total = 0;
+
+    for(let i = 0; i < array.length; i++){
+        
+        if(Array.isArray(array[i])){
+           total = total + countArray(array[i])
+        }else{
+            total = total + array[i]
+        }
+        
+    }
+    return total
 }
 
 
@@ -39,7 +51,18 @@ var countArray = function(array) {
 
 var countProps = function(obj) {
     // Tu código aca:
+    let total = 0;
 
+    for (const key in obj) {
+        if (typeof(obj[key]) === 'object' && !Array.isArray(obj[key])) {
+            total = total + countProps(obj[key])
+        }
+        
+        total++;
+        
+    }
+
+    return total
 }
 
 
@@ -53,7 +76,21 @@ var countProps = function(obj) {
 
 LinkedList.prototype.changeNotNumbers = function(){
     // Tu código aca:
+    let current = this.head;
+    let contador = 0;
 
+    while (current !== null) {
+        
+        if(isNaN(Number(current.value))){
+            current.value = 'Kiricocho';
+            contador++;
+        }
+
+        current = current.next;
+
+    }
+
+    return contador;
 }
 
 
@@ -67,7 +104,13 @@ LinkedList.prototype.changeNotNumbers = function(){
 
 var mergeQueues = function(queueOne, queueTwo) {
     // Tu código aca:
-
+    let merged = new Queue();
+    
+    while(queueOne.size() || queueTwo.size()){
+        if(queueOne.size()) merged.enqueue(queueOne.dequeque())
+        if(queueTwo.size()) merged.enqueue(queueOne.dequeque())
+    }
+    return merged
 }
 
 
@@ -82,14 +125,26 @@ var mergeQueues = function(queueOne, queueTwo) {
 
 var closureMult = function(multiplier) {
     // Tu código aca:
-
+    return function(num){
+        return num * multiplier
+    }
 }
 
 // Implementar el método sum dentro del prototype de BinarySearchTree
 // que debe retornar la suma total de los valores dentro de cada nodo del arbol
 BinarySearchTree.prototype.sum = function() {
     // Tu código aca:
+    let suma = this.value;
 
+    if(this.left !== null){
+        suma = suma + this.left.sum();
+    }
+
+    if(this.right !== null){
+        suma = suma + this.right.sum()
+    }
+
+    return suma;
 }
 
 module.exports = {
